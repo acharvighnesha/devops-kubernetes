@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metaData:
+  name:  nginx
+  labels:
+    batch: c34
+
+spec:
+  containers:
+    - image:  nginx
+      name:  nginx
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx
+spec:
+  containers:
+  - name: nginx
+    image: nginx
