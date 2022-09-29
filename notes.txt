@@ -1,0 +1,31 @@
+Kubernetes Notes
+
+->To Get Pods Running
+kubectl get pods
+
+->To Create a pod
+
+kubectl create -f <file-name>.yaml
+
+->To delete a pod
+
+kubectl destroy -f <file-name>.yaml
+
+->create a cluster (ie master)
+eksctl create cluster -f <file-namename>.yaml
+eksctl create cluster -f cluster.yaml
+
+-->to delete cluster
+eksctl delete cluster -f cluster.yaml
+
+kubectl get svc
+kubectl get service
+kubectl get pods
+kubectl describe pod <podname>
+eg->kubectl describe pod nginx-5cc9bcd694-9q8mf
+
+-->To apply the changes
+
+kubectl apply -s <filename>.yaml
+
+https://github.com/dockersamples/example-voting-app
