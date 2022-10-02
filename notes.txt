@@ -11,6 +11,10 @@ kubectl create -f <file-name>.yaml
 
 kubectl destroy -f <file-name>.yaml
 
+-> To apply modification to a pod
+
+kubectl apply -f <file-name>.yaml
+
 ->create a cluster (ie master)
 eksctl create cluster -f <file-namename>.yaml
 eksctl create cluster -f cluster.yaml
@@ -29,3 +33,112 @@ eg->kubectl describe pod nginx-5cc9bcd694-9q8mf
 kubectl apply -s <filename>.yaml
 
 https://github.com/dockersamples/example-voting-app
+
+
+
+IQ->If a pod starts using more cpu & memory than specified in limits?
+In case of cpu kubernetes will block the requests.
+In case of memory kubernetes will all to use more momory than specified in limits for sometime (depending on availablity in ec2 machine)
+
+--> To Get more info about rhe pod
+
+kubectl get pods -o wide
+
+-->To taint a node
+kubectl taint nodes <nodeip> key1=value1:NoSchedule
+kubectl taint nodes ip-192-168-36-69.ec2.internal batch=c34:NoSchedule
+
+-->
+
+
+Terraform notes:
+
+->command to create terraform workspace
+
+terraform workspace new dev
+terraform workspace list
+terraform workspace select dev
+
+
+-->command to apply terraform with environment variable
+terraform apply --var-file="environments/dev.tfvars"
+terraform plan --var-file="environments/dev.tfvars"
+terraform destroy --var-file="environments/dev.tfvars"
+
+
+
+
+
+
+
+
+Ansible
+
+ansible works on master & clients archtitecture
+
+master should be able to ssh into clients ie port 22 of clients should be open for master and master should have client ip & config
+
+ansible is mainly of two files , inventory and playbook
+
+inventory-ssh details of clients
+
+
+2 ubuntu machines
+1 install ansible
+playbook-to do comamnds on clients
+
+installation-link
+https://www.digitalocean.com/community/tutorials/how-to-install-and-configure-ansible-on-ubuntu-20-04
+
+modify sg of client so that master can ssh into client
+
+
+
+-------adding user in ec2----------
+sudo adduser demo
+
+cd /etc/ssh
+
+sudo vi sshd_Config
+
+PasswordAuthentication =yes
+
+sudo service sshd restart
+
+------------------------------------
+
+ansible all -m ping -i inventory
+
+inventory file:
+3.95.134.179 ansible_ssh_user=vignesh ansible_ssh_pass=Acharya@093
+3.95.134.179 ansible_ssh_user=ubuntu ansible_ssh_private_key_file=upgr.pem
+
+running with groups
+
+
+->to run a playbook file
+ansible-playbook playbook,yaml -i inventory
+
+
+ansible right -m setup -i inventory
+
+(setup module gives the complete info about the client machine)
+
+try static website  deployment using ngnix
+https://www.digitalocean.com/community/tutorials/how-to-deploy-a-static-html-website-with-ansible-on-ubuntu-20-04-nginx
+
+
+ansible all -m ping -i <inventory-file>.yaml
+aws ansible inventory file
+https://docs.ansible.com/ansible/latest/collections/amazon/aws/aws_ec2_inventory.html
+
+https://medium.com/@hemendrachaudhary2052000/ansible-dynamic-inventory-for-aws-ec2-c01e422814a8
+
+export AWS_REGION='us-east-1'
+export AWS_ACCESS_KEY_ID='AKIAVEWXEMNO6URD6E2K'
+export AWS_SECRET_ACCESS_KEY='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'
+
+
+
+
+

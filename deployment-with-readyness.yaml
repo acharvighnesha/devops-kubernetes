@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: c34
+
+  template:
+    metadata:
+      name: nginx1
+      labels:
+        app: c34
+    
+    spec:
+      containers:
+        - name: nginx1
+          image: nginx
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: ".5"
+            limits:
+              memory: "128Mi"
+              cpu: "1"
+
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 3
+            periodSeconds: 3      

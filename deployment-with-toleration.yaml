@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx1
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: c34
+
+  template:
+    metadata:
+      name: nginx1
+      labels:
+        app: c34
+    
+    spec:
+      containers:
+        - name: nginx1
+          image: nginx
+          resources:
+            requests:
+              memory: "64Mi"
+              cpu: ".5"
+            limits:
+              memory: "128Mi"
+              cpu: "1"
+              
+      tolerations:
+      - key: "batch"
+        operator: "Equal"
+        value: "c34"
+        effect: "NoSchedule"
+
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: batch
+                operator: In
+                values:
+                - c34
